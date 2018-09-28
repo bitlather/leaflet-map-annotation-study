@@ -18,7 +18,11 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 		this._resizeMarkers = [];
 
 		for (var i = 0, l = corners.length; i < l; i++) {
-			this._resizeMarkers.push(this._createMarker(corners[i], this.options.resizeIcon));
+			this._resizeMarkers.push(
+				this._createMarker(corners[i], 
+				(i % 2 == 0)
+				? this.options.resizeNwseIcon
+				: this.options.resizeNeswIcon));
 			// Monkey in the corner index as we will need to know this for dragging
 			this._resizeMarkers[i]._cornerIndex = i;
 		}
