@@ -12,10 +12,13 @@
 
     <script src="TouchEvents.js"></script>
 
+    <script src="Edit.SimpleShape.js"></script>
+
+    <!-- Rectangle Annotations -->
 	<script src="Edit.Poly.js"></script>
-	<script src="Edit.SimpleShape.js"></script>
 	<script src="Edit.Rectangle.js"></script>
-	<script src="Edit.Marker.js"></script>
+
+	<!-- Circle Annotations -->
 	<script src="Edit.CircleMarker.js"></script>
 	<script src="Edit.Circle.js"></script>
 
@@ -42,33 +45,6 @@
 			osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 			osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
 			map = new L.Map('map', {layers: [osm], center: new L.LatLng(51.505, -0.04), zoom: 13});
-
-		var polygon = new L.Polygon([
-			[51.51, -0.1],
-			[51.5, -0.06],
-			[51.52, -0.03]
-		]);
-
-		polygon.editing.enable();
-
-		map.addLayer(polygon);
-
-		var polyline = new L.Polyline([
-			[51.50, -0.04],
-			[51.49, -0.02],
-			[51.51, 0],
-			[51.52, -0.02]
-		]);
-
-		polyline.editing.enable();
-
-		map.addLayer(polyline);
-
-		var circleMarker = L.circleMarker([51.50, -0.08]);
-
-		circleMarker.editing.enable();
-
-		map.addLayer(circleMarker);
 
 		var circle = L.circle([51.53, -0.06], 600);
 
