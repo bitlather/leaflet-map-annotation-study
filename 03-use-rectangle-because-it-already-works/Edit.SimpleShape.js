@@ -7,8 +7,8 @@ L.Edit.SimpleShape = L.Handler.extend({
 	options: {
 		//*DTA see leaflet.css for cursor classes.
 		moveIcon: new L.DivIcon({
-			iconSize: new L.Point(8, 8),
-			className: 'leaflet-div-icon leaflet-editing-icon leaflet-edit-move dta-touch-move-icon'
+			iconSize: new L.Point(14, 14),
+			className: 'leaflet-div-icon leaflet-editing-icon leaflet-edit-move dta-move-icon'
 		}),
 		resizeIcon: new L.DivIcon({
 			iconSize: new L.Point(8, 8),
