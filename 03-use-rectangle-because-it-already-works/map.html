@@ -18,6 +18,11 @@
 	<script src="Edit.Poly.js"></script>
 	<script src="Edit.Rectangle.js"></script>
 
+	<style>
+	.dta-touch-move-icon {
+		cursor: move;
+	}
+	</style>
 
 </head>
 <body>
@@ -28,6 +33,15 @@
 
 	<p>
 		From: <a href="https://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html">https://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html</a>
+	</p>
+
+	<p>
+		Notes:
+		<ul>
+			<li>Circles weren't working in the demo I was referencing.</li>
+			<li>Rectangles are typically faster to draw.</li>
+			<li>Rectangles would also be faster for detecting overlapping with a property (though this speed improvement may be minor and not enough to warrant recatngles over circles).</li>
+		</ul>
 	</p>
 
 	<div id="map" style="width: 800px; height: 600px; border: 1px solid #ccc"></div>
