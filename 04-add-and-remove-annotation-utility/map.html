@@ -31,10 +31,10 @@
 	.dta-resize-ns-cursor {
 		cursor: ns-resize;
 	}
-/*	.dta-transparent {
+	.dta-transparent {
 		border: 0;
 		background-color: transparent;
-	}*/
+	}
 	</style>
 
 </head>
@@ -51,28 +51,68 @@
 	<p>
 		Notes:
 		<ul>
-			<li>Circles weren't working in the demo I was referencing.</li>
-			<li>Rectangles are typically faster to draw.</li>
-			<li>Rectangles would also be faster for detecting overlapping with a property (though this speed improvement may be minor and not enough to warrant recatngles over circles).</li>
+			<li></li>
 		</ul>
 	</p>
 
-	<div id="map" style="width: 800px; height: 600px; border: 1px solid #ccc"></div>
+	<div id="map" style="width: 800px; height: 600px; border: 1px solid #ccc"></div>	
 
 	<script>
 		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 			osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
-			map = new L.Map('map', {layers: [osm], center: new L.LatLng(51.48, -0.06), zoom: 13});
+			map = new L.Map('map', {layers: [osm], center: new L.LatLng(51.46, -0.08), zoom: 13});
 
-		var rectangle = L.rectangle([[51.49, -0.1], [51.48, -0.06]]);
+		var globalMinLatLng = null;
+		var globalMaxLatLng = null;
 
-		rectangle.editing.enable();
+		function addRectangle(latLng1, latLng2) {
 
-		map.addLayer(rectangle);
+			if (globalMinLatLng == null) {
+				globalMinLatLng = [];
+				globalMinLatLng[0] = Math.min(latLng1[0], latLng2[0]);
+				globalMinLatLng[1] = Math.min(latLng1[1], latLng2[1]);
+			} else {
+				globalMinLatLng[0] = Math.min(globalMinLatLng[0], latLng1[0], latLng2[0]);
+				globalMinLatLng[1] = Math.min(globalMinLatLng[1], latLng1[1], latLng2[1]);
+			}
+
+			if (globalMaxLatLng == null) {
+				globalMaxLatLng = [];
+				globalMaxLatLng[0] = Math.max(latLng1[0], latLng2[0]);
+				globalMaxLatLng[1] = Math.max(latLng1[1], latLng2[1]);
+			} else {
+				globalMaxLatLng[0] = Math.max(globalMinLatLng[0], latLng1[0], latLng2[0]);
+				globalMaxLatLng[1] = Math.max(globalMinLatLng[1], latLng1[1], latLng2[1]);
+			}
+
+			var rectangle = L.rectangle([latLng1, latLng2]);			
+
+			rectangle.editing.enable();
+
+			map.addLayer(rectangle);
+		}
+
+		addRectangle(
+			[51.49, -0.1],
+			[51.48, -0.06]);
+
+		addRectangle(
+			[51.51, -0.1],
+			[51.49, -0.06]);
+
+		function centerMapOnAnnotations() {
+			if (globalMinLatLng == null || globalMaxLatLng == null) {
+				return;
+			}
+			map.fitBounds([globalMinLatLng, globalMaxLatLng]);
+		}
+
+		centerMapOnAnnotations();
+
+		global_annotation_with_focus = null;
 
 	</script>
 
-	<button onclick="map.removeLayer(rectangle);">REMOVE THING</button>
 </body>
 </html>

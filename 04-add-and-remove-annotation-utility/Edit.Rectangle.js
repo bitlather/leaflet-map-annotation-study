@@ -6,34 +6,6 @@ L.Edit = L.Edit || {};
  */
 L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 
-	_updateResizeMarkers: function () {
-
-var cornerLatLngs = this._shape.getLatLngs();
-var topLeftLatLng = cornerLatLngs[0];
-var bottomRightLatLng = cornerLatLngs[2];
-
-
-
-var rectangle = L.rectangle([topLeftLatLng, bottomRightLatLng]);
-rectangle.editing.enable();
-this._map.addLayer(rectangle);
-
-		//this._resizeMarkers = [];
-//console.log(this._map)
-this._map.removeLayer(this._shape);
-return;
-		for (var i = 0, l = corners.length; i < l; i++) {
-			this._resizeMarkers.push(
-				this._createMarker(corners[i], 
-				(i % 2 == 0)
-				? this.options.resizeNwseIcon2
-				: this.options.resizeNeswIcon));
-			// Monkey in the corner index as we will need to know this for dragging
-			this._resizeMarkers[i]._cornerIndex = i;
-console.log(this._resizeMarkers[i])
-		}
-	},
-
 	_createMoveMarker: function () {
 		var bounds = this._shape.getBounds(),
 			center = bounds.getCenter();
@@ -68,6 +40,7 @@ console.log(this._resizeMarkers[i])
 		this._oppositeCorner = corners[(currentCornerIndex + 2) % 4];
 
 		this._toggleCornerMarkers(0, currentCornerIndex);
+
 	},
 
 	_onMarkerDragEnd: function (e) {
@@ -144,7 +117,6 @@ console.log(this._resizeMarkers[i])
 		for (var i = 0, l = this._resizeMarkers.length; i < l; i++) {
 			this._resizeMarkers[i].setLatLng(corners[i]);
 		}
-this._updateResizeMarkers();
 	}
 });
 
