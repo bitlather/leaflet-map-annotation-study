@@ -55,6 +55,8 @@
 		</ul>
 	</p>
 
+	<button onclick="removeAnnotationThatHasFocus()">Remove Annotation</button>
+
 	<div id="map" style="width: 800px; height: 600px; border: 1px solid #ccc"></div>	
 
 	<script>
@@ -65,6 +67,11 @@
 
 		var globalMinLatLng = null;
 		var globalMaxLatLng = null;
+
+		var globalFillColor = "#0033FF";
+		var globalStrokeColor = "#0033FF";
+		var globalFocusFillColor = "#0099FF";
+		var globalFocusStrokeColor = "#0099FF";
 
 		function addRectangle(latLng1, latLng2) {
 
@@ -86,11 +93,14 @@
 				globalMaxLatLng[1] = Math.max(globalMinLatLng[1], latLng1[1], latLng2[1]);
 			}
 
-			var rectangle = L.rectangle([latLng1, latLng2]);			
+			var rectangle = L.rectangle([latLng1, latLng2]);
 
 			rectangle.editing.enable();
 
 			map.addLayer(rectangle);
+
+			globalSetShapeFillColor(rectangle, globalFillColor);
+			globalSetShapeStrokeColor(rectangle, globalStrokeColor);
 		}
 
 		addRectangle(
@@ -110,7 +120,37 @@
 
 		centerMapOnAnnotations();
 
-		global_annotation_with_focus = null;
+		globalAnnotationWithFocus = null;
+
+		function removeAnnotationThatHasFocus() {
+			if (globalAnnotationWithFocus == null) {
+				return;
+			}
+
+			map.removeLayer(globalAnnotationWithFocus);
+		}
+
+		function globalSetShapeThatHasFocus(shape) {
+
+			if (globalAnnotationWithFocus != null) {
+				globalSetShapeFillColor(globalAnnotationWithFocus, globalFillColor);
+				globalSetShapeStrokeColor(globalAnnotationWithFocus, globalStrokeColor);
+			}
+
+			globalSetShapeFillColor(shape, globalFocusFillColor);
+			globalSetShapeStrokeColor(shape, globalFocusStrokeColor);
+			
+			globalAnnotationWithFocus = shape; // bad scope but it works
+		}
+
+		function globalSetShapeFillColor(shape, colorString) {
+			shape._container.getElementsByTagName("path")[0].setAttribute("fill", colorString);
+		}
+
+		function globalSetShapeStrokeColor(shape, colorString) {
+			shape._container.getElementsByTagName("path")[0].setAttribute("stroke", colorString);
+		}
+
 
 	</script>
 

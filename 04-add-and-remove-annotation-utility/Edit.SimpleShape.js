@@ -125,6 +125,7 @@ L.Edit.SimpleShape = L.Handler.extend({
 
 	_bindMarker: function (marker) {
 		marker
+			.on('click', this._onClick, this)
 			.on('dragstart', this._onMarkerDragStart, this)
 			.on('drag', this._onMarkerDrag, this)
 			.on('dragend', this._onMarkerDragEnd, this)
@@ -137,6 +138,7 @@ L.Edit.SimpleShape = L.Handler.extend({
 
 	_unbindMarker: function (marker) {
 		marker
+			.off('click', this._onClick, this)
 			.off('dragstart', this._onMarkerDragStart, this)
 			.off('drag', this._onMarkerDrag, this)
 			.off('dragend', this._onMarkerDragEnd, this)
@@ -157,6 +159,10 @@ L.Edit.SimpleShape = L.Handler.extend({
 	_fireEdit: function () {
 		this._shape.edited = true;
 		this._shape.fire('edit');
+	},
+
+	_onClick: function (e) {
+		// children override this
 	},
 
 	_onMarkerDrag: function (e) {

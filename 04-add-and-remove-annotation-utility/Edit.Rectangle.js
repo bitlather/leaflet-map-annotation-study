@@ -6,6 +6,10 @@ L.Edit = L.Edit || {};
  */
 L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 
+	_setHasFocus: function() {
+		globalSetShapeThatHasFocus(this._shape);
+	},
+
 	_createMoveMarker: function () {
 		var bounds = this._shape.getBounds(),
 			center = bounds.getCenter();
@@ -29,6 +33,10 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 		}
 	},
 
+	_onClick: function (e) {
+		this._setHasFocus();
+	},
+
 	_onMarkerDragStart: function (e) {
 		L.Edit.SimpleShape.prototype._onMarkerDragStart.call(this, e);
 
@@ -40,6 +48,8 @@ L.Edit.Rectangle = L.Edit.SimpleShape.extend({
 		this._oppositeCorner = corners[(currentCornerIndex + 2) % 4];
 
 		this._toggleCornerMarkers(0, currentCornerIndex);
+
+		this._setHasFocus();
 
 	},
 
