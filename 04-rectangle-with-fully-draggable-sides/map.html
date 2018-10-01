@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet.draw vector editing handlers</title>
+
+    <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <script src="Leaflet.draw.js"></script>
+    <script src="Leaflet.Draw.Event.js"></script>
+
+    <script src="TouchEvents.js"></script>
+
+    <script src="Edit.SimpleShape.js"></script>
+
+    <!-- Rectangle Annotations -->
+	<script src="Edit.Poly.js"></script>
+	<script src="Edit.Rectangle.js"></script>
+
+	<style>
+	.dta-move-cursor {
+		cursor: move;
+	}
+	.dta-resize-nesw-cursor {
+		cursor: nesw-resize;
+	}
+	.dta-resize-nwse-cursor {
+		cursor: nwse-resize;
+	}
+	.dta-resize-ns-cursor {
+		cursor: ns-resize;
+	}
+/*	.dta-transparent {
+		border: 0;
+		background-color: transparent;
+	}*/
+	</style>
+
+</head>
+<body>
+
+	<p>
+		Demo: <a href="https://leaflet.github.io/Leaflet.draw/docs/examples/edithandlers.html">https://leaflet.github.io/Leaflet.draw/docs/examples/edithandlers.html</a>
+	</p>
+
+	<p>
+		From: <a href="https://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html">https://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html</a>
+	</p>
+
+	<p>
+		Notes:
+		<ul>
+			<li>Circles weren't working in the demo I was referencing.</li>
+			<li>Rectangles are typically faster to draw.</li>
+			<li>Rectangles would also be faster for detecting overlapping with a property (though this speed improvement may be minor and not enough to warrant recatngles over circles).</li>
+		</ul>
+	</p>
+
+	<div id="map" style="width: 800px; height: 600px; border: 1px solid #ccc"></div>
+
+	<script>
+		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+			osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+			osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
+			map = new L.Map('map', {layers: [osm], center: new L.LatLng(51.48, -0.06), zoom: 13});
+
+		var rectangle = L.rectangle([[51.49, -0.1], [51.48, -0.06]]);
+
+		rectangle.editing.enable();
+
+		map.addLayer(rectangle);
+
+	</script>
+
+	<button onclick="map.removeLayer(rectangle);">REMOVE THING</button>
+</body>
+</html>
