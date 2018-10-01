@@ -11,11 +11,11 @@ L.Edit.SimpleShape = L.Handler.extend({
 			className: 'leaflet-div-icon leaflet-editing-icon leaflet-edit-move dta-move-cursor'
 		}),
 		resizeNeswIcon: new L.DivIcon({
-			iconSize: new L.Point(8, 8),
+			iconSize: new L.Point(14, 14),
 			className: 'leaflet-div-icon leaflet-editing-icon leaflet-edit-resize dta-resize-nesw-cursor dta-transparent'
 		}),
 		resizeNwseIcon: new L.DivIcon({
-			iconSize: new L.Point(8, 8),
+			iconSize: new L.Point(14, 14),
 			className: 'leaflet-div-icon leaflet-editing-icon leaflet-edit-resize dta-resize-nwse-cursor dta-transparent'
 		}),
 		//*DTA will need to look into how touch behaves

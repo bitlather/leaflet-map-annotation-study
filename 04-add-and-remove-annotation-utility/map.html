@@ -56,6 +56,7 @@
 	</p>
 
 	<button onclick="removeAnnotationThatHasFocus()">Remove Annotation</button>
+	<button onclick="addAnnotationToCenterOfMap()">Add Annotation</button>
 
 	<div id="map" style="width: 800px; height: 600px; border: 1px solid #ccc"></div>	
 
@@ -101,6 +102,8 @@
 
 			globalSetShapeFillColor(rectangle, globalFillColor);
 			globalSetShapeStrokeColor(rectangle, globalStrokeColor);
+
+			return rectangle;
 		}
 
 		addRectangle(
@@ -121,6 +124,28 @@
 		centerMapOnAnnotations();
 
 		globalAnnotationWithFocus = null;
+
+		function addAnnotationToCenterOfMap() {
+
+			var mapBounds = map.getBounds();
+
+			var mapNorthEastLatLng = mapBounds._northEast;
+			var mapSouthWestLatLng = mapBounds._southWest;
+
+			var latIncrement = (mapSouthWestLatLng.lat - mapNorthEastLatLng.lat) / 8;
+			var lngIncrement = (mapSouthWestLatLng.lng - mapNorthEastLatLng.lng) / 8;
+
+			var annotationNorthEastLatLng = [
+				(mapNorthEastLatLng.lat + mapSouthWestLatLng.lat) / 2 - latIncrement,
+				(mapNorthEastLatLng.lng + mapSouthWestLatLng.lng) / 2 - lngIncrement];
+			var annotationSouthWestLatLng = [
+				(mapNorthEastLatLng.lat + mapSouthWestLatLng.lat) / 2 + latIncrement,
+				(mapNorthEastLatLng.lng + mapSouthWestLatLng.lng) / 2 + lngIncrement];
+
+			var rectangle = addRectangle(annotationNorthEastLatLng, annotationSouthWestLatLng);
+
+			globalSetShapeThatHasFocus(rectangle);
+		}
 
 		function removeAnnotationThatHasFocus() {
 			if (globalAnnotationWithFocus == null) {
